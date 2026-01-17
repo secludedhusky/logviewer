@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//e/Users/TammyShepherd/Documents/logviewer/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
