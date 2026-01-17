@@ -28,6 +28,8 @@ if not MONGO_URI:
           "Please enter your MongoDB connection URI in the configuration or .env file.")
     exit(1)
 
+DB_NAME = os.getenv("DB_NAME", "modmail_bot")
+
 app = Sanic(__name__)
 app.static("/static", "./static")
 
@@ -63,7 +65,7 @@ def strtobool(val):
 
 @app.listener("before_server_start")
 async def init(app, loop):
-    app.ctx.db = AsyncIOMotorClient(MONGO_URI).modmail_bot
+    app.ctx.db = AsyncIOMotorClient(MONGO_URI)[DB_NAME]
     use_attachment_proxy = strtobool(os.getenv("USE_ATTACHMENT_PROXY", "no"))
     if use_attachment_proxy:
         app.ctx.attachment_proxy_url = os.getenv("ATTACHMENT_PROXY_URL", "https://cdn.discordapp.xyz")
